@@ -6,6 +6,12 @@ from sql_queries import *
 
 
 def process_song_file(cur, filepath):
+    """Load the song files into songs table and artists tables
+
+    Args:
+      cur: Cursor of connection to the target database
+      filepath: WHERE the song files reside.
+    """
     # open song file
     df = pd.read_json(filepath, lines=True)
 
@@ -19,6 +25,12 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+    """Load the log files into time table, users tables, and songplays table
+
+    Args:
+      cur: Cursor of connection to the target database
+      filepath: WHERE the log files reside.
+    """
     # open log file
     df = pd.read_json(filepath, lines=True)
 
@@ -63,6 +75,15 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    """Walk through the files in the filepath, extract all the JSON files, iterate each JSON file and process each JSON file with the given function.
+       Monitor the completeness of file process.
+
+    Args:
+      cur: Cursor of connection to the target database
+      conn: Connection to the target database
+      filepath: Path of the target directory containing data to be processed
+      func: Function used to process each file in the target directory
+    """
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -82,7 +103,10 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
-    conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=postgres password=187601")
+    """Connect to the database named sparkifydb, use process_data function to process the files in 'data/song_data' directory and 'data/log_data' directory.
+       Load all the files in the 'data' directory into the sparkifydb according to the schema 
+    """
+    conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 
     process_data(cur, conn, filepath='data/song_data', func=process_song_file)
