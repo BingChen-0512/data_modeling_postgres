@@ -10,7 +10,7 @@ The database schema was designed to be a star schema with a fact table (songplay
 #### Fact Table
 1. **songplays**-records in log data asscociated with songs plays
 - _songplay_id, start_time, user_id, level, song_id, artist_id, session_id, location, user_agent_
-
+![alt text](https://github.com/BingChen-0512/data_modeling_postgres/blob/master/songplays.png?raw=true)
 #### Dimension Tables
 2. **users**-users in the app
 - _user_id, first_name, last_name, gender, level_
