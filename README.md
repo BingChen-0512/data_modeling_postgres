@@ -14,12 +14,16 @@ The database schema was designed to be a star schema with a fact table (songplay
 #### Dimension Tables
 2. **users**-users in the app
 - _user_id, first_name, last_name, gender, level_
+![alt text](https://github.com/BingChen-0512/data_modeling_postgres/blob/master/users.png?raw=true)
 3. **songs**-songs in music database
 - _song_id, title, artist_id, year, duration_
+![alt text](https://github.com/BingChen-0512/data_modeling_postgres/blob/master/songs.png?raw=true)
 4. **artists**-artists in music database
 - _artist_id, name, location, latitude, longitude_
+![alt text](https://github.com/BingChen-0512/data_modeling_postgres/blob/master/artists.png?raw=true)
 5. **time**-timestamps of records in **songplays** broken down into specific units
 - _start_time, hour, day, week, month, year, weekday_
+![alt text](https://github.com/BingChen-0512/data_modeling_postgres/blob/master/time.png?raw=true)
 
 #### ETL pipeline
 The ETL pipeline is based on two functions. The _process_song_file_ function is to read files in the "data/song_data" file and load the data about songs into **songs** table and **artists** table. The _process_log_file_ function is to extract log data associated with song plays and load them into **users** table, **time** table and **songplays** table. As the **songplays** table is designed as fact table, the primary keys of **songs** table and **artists** table are added to it by joining these two dimesion tables on artists_id. Finally, a _process_data_ function is used to walk through the two directories and call the above two functions respectively.
